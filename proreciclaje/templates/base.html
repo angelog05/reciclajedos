@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ReciclandoFuturo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- IMPORTACIONES PRINCIPALES -->
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+    {% block head %}
+    {% endblock head %} 
+
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i/Montserrat:300,400,500,700"
+      rel="stylesheet"
+    />
+
+    <!-- Iconos -->
+    <link
+      href="https://unpkg.com/ionicons@4.5.9-1/dist/css/ionicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- JQuery + Jquery validate -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+
+    <!--Google Fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+
+    <div class="container">
+      <nav id="cont-nav-color" class="navbar navbar-expand-lg fixed-top col-sm-12">
+          <a class="navbar-brand" href="index.html" style="color:black"><img src="" alt="" class="logo" />
+            <small>ReciclandoFuturo</small>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navegadorContenido"
+            aria-controls="navegadorContenido" aria-expanded="false" aria-label="Navegacion">
+            <i class="icon ion-md-menu text-dark"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navegadorContenido">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'gestion_usuario:index' %}">Inicio</a>
+              </li>
+                <a class="nav-link" href="{% url 'gestion_usuario:servicios' %}">Servicios y Tarifas</a>
+              </li>
+              <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'gestion_usuario:contacto' %}">Contacto</a>
+              </li>
+              {% if not request.user.is_authenticated %}
+              <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'gestion_usuario:login' %}">Iniciar sesión</a>
+              </li>
+              <li class="nav-item mx-2">
+                <a class="nav-link" href="{% url 'gestion_usuario:registrar' %}">Registrate</a>
+              </li>
+              {% else %}
+                <a class="nav-link" href="{% url 'gestion_usuario:logout' %}">Cerrar sesión</a>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+    </div>
+
+    <div class="container">
+    {% block content %}
+    {% endblock content%}
+    </div>
+
+  </body>
