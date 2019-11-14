@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .models import PerfilUsuario
 
 
-class PerfilUsuarioForm(forms.ModelForm):
+class   PerfilUsuarioForm(forms.ModelForm):
     class Meta():
         model = PerfilUsuario
         fields = ('foto_perfil',)
@@ -14,7 +14,7 @@ class PerfilUsuarioForm(forms.ModelForm):
 
 
 class RegistrarForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput(), label='Contraseña')
 
     class Meta:
         model = User

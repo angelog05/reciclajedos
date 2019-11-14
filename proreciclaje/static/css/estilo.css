@@ -21,6 +21,11 @@ body {
     outline: none;
     text-decoration: none;
   }
+
+  .login {
+    max-width: 300px;
+    margin: 0 auto;
+  }
   
   p {
     padding: 0;

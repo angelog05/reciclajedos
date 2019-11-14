@@ -44,9 +44,9 @@
   </head>
   <body>
 
-    <div class="container">
-      <nav id="cont-nav-color" class="navbar navbar-expand-lg fixed-top col-sm-12">
-          <a class="navbar-brand" href="index.html" style="color:black"><img src="" alt="" class="logo" />
+    <div class="container-fluid">
+      <nav id="cont-nav-color" class="navbar navbar-expand-lg col-sm-12">
+          <a class="navbar-brand" href="{% url 'gestion_usuario:index' %}" style="color:black"><img src="" alt="" class="logo" />
             <small>ReciclandoFuturo</small>
           </a>
 
@@ -58,22 +58,19 @@
           <div class="collapse navbar-collapse" id="navegadorContenido">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'gestion_usuario:index' %}">Inicio</a>
-              </li>
-                <a class="nav-link" href="{% url 'gestion_usuario:servicios' %}">Servicios y Tarifas</a>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'gestion_usuario:contacto' %}">Contacto</a>
+                <a class="nav-link" href="{% url 'gestion_usuario:index' %}">Home</a>
               </li>
               {% if not request.user.is_authenticated %}
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'gestion_usuario:login' %}">Iniciar sesión</a>
-              </li>
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'gestion_usuario:registrar' %}">Registrate</a>
-              </li>
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="{% url 'gestion_usuario:login' %}">Iniciar_sesión</a>
+                </li>
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="{% url 'gestion_usuario:registrar' %}">Registrate</a>
+                </li>
               {% else %}
-                <a class="nav-link" href="{% url 'gestion_usuario:logout' %}">Cerrar sesión</a>
+                <li class="nav-item mx-1">
+                  <a class="nav-link" href="{% url 'gestion_usuario:logout' %}">Cerrar_sesión</a>
+                </li>
               {% endif %}
             </ul>
           </div>
@@ -81,8 +78,8 @@
     </div>
 
     <div class="container">
-    {% block content %}
-    {% endblock content%}
+        {% block content %}
+        {% endblock content%}
     </div>
 
   </body>

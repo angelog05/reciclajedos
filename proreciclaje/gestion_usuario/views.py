@@ -72,7 +72,7 @@ def registrar(request):
         else: ## Si alguno de los formularios es invalido
             print(user_form.errors, profile_form.errors)
             return HttpResponse("Datos inválidos")
-    else:
+    else: ## Si no es POST generamos los formularios
         user_form = RegistrarForm()
         profile_form = PerfilUsuarioForm()
 
