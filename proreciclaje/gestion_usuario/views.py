@@ -7,10 +7,15 @@ from .forms import RegistrarForm, PerfilUsuarioForm
 ## Cierre de sesion
 def usuario_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('gestion_usuario:index'))
+    ##return HttpResponseRedirect(reverse('gestion_usuario:principal'))
+    return render(request, 'principal.html',{})
 
 ## renderizacion a pagina inicial
 def index(request):
+    return render(request, 'gestion_usuario/index.html',{})
+
+## renderizacion a pagina inicial
+def principal(request):
     return render(request, 'gestion_usuario/index.html',{})
 
 ## Inicio de sesión    
