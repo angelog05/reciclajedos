@@ -1,7 +1,45 @@
 {% extends 'base.html' %}
 <!-- ////////////////////////////////////////////////// -->
 {% block content %}
-    <h1>Bienvenido {{user.username}} </h1>
-    
+    <!--<h1>Bienvenido {{user.username}} </h1>-->
+    <br>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Bienvenido {{user.username}} </strong> Revisa las novedades !
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="list-group">
+            <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Tu Plan</h5>
+                <small>Plan y ofertas</small>
+                </div>
+                <p class="mb-1">Toda la información de tu plan</p>
+                
+            </a>
+            <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Residuos reciclados</h5>
+                <small class="text-muted">Estadisticas</small>
+                </div>
+                <p class="mb-1">Revisa cuanto has reciclado y averigua como obtener puntos</p>
+                
+            </a>
+            <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Informaciones</h5>
+                <small class="text-muted">Información</small>
+                </div>
+                <p class="mb-1">Obtén toda la información que necesites para aumentar tu % de reciclaje</p>
+                
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        
+    </div>
+    <br>
 {% endblock content %}
 <!-- ////////////////////////////////////////////////// -->

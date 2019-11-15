@@ -16,7 +16,7 @@ def index(request):
 
 ## renderizacion a pagina inicial
 def principal(request):
-    return render(request, 'gestion_usuario/index.html',{})
+    return render(request, 'principal.html',{})
 
 ## Inicio de sesión    
 def usuario_login(request):
