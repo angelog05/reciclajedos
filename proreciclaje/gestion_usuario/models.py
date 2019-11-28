@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-# Create your models here.
+from django.utils.translation import ugettext as _
 
 
 class PerfilUsuario(models.Model):
@@ -11,3 +10,11 @@ class PerfilUsuario(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Servicio(models.Model):
+    nombreservicio = models.CharField(max_length=20)
+    valorservicio = models.IntegerField()
+    descripcionservicio = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nombre

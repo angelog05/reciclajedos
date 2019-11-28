@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+<!-- ////////////////////////////////////////////////// -->
+{% block content %}
+    <br>
+    
+    <h1 class="display-3">Lista de servicios</h1>
+
+    <a href="{% url 'gestion_usuario:agregar_servicios' %}">
+        <button type="button" class="btn btn-outline-success">
+            Agregar nuevo servicio
+        </button>
+    </a>
+    <br>    
+    {{ mensaje }}
+    <br>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+            <th>Nombre</th>
+            <th>Valor</th>
+            <th>Descripcion</th>
+            <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for s in servicios %}
+            <tr>
+            <td>{{ s.nombreservicio}}</td>
+            <td>{{ s.valorservicio}}</td>
+            <td>{{ s.descripcionservicio}}</td>
+            <td>
+                <a href="/editar_servicio/{{ s.id }}"> Editar</a>
+                <a href="/eliminar_servicio/{{ s.id }}"
+                onclick="return confirm('¿Esta seguro de borrar {{ s.nombreservicio }}?');"> Borrar</a>
+            </td>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
+<!-- ////////////////////////////////////////////////// -->

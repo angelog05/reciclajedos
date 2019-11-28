@@ -57,10 +57,10 @@
 
           <div class="collapse navbar-collapse" id="navegadorContenido">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'gestion_usuario:principal' %}">Inicio</a>
-              </li>
               {% if not request.user.is_authenticated %}
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="{% url 'gestion_usuario:principal' %}">Inicio</a>
+                </li>
                 <li class="nav-item mx-2">
                   <a class="nav-link" href="#">Servicios</a>
                 </li>
@@ -72,10 +72,10 @@
                 </li>
               {% else %}
                 <li class="nav-item mx-1">
-                  <a class="nav-link"  href="#">Plan</a>
+                  <a class="nav-link" href="{% url 'gestion_usuario:index' %}">{{ user.username }}</a>
                 </li>
                 <li class="nav-item mx-1">
-                  <a class="nav-link" href="#">Mensajes</a>
+                  <a class="nav-link"  href="{% url 'gestion_usuario:listar_servicios' %}">Servicios</a>
                 </li>
                 <li class="nav-item mx-1">
                   <a class="nav-link" href="{% url 'gestion_usuario:logout' %}">Cerrar_sesión</a>

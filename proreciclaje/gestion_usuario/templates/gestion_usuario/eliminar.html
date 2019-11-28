@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+<!-- ////////////////////////////////////////////////// -->
+{% block mensaje %}
+    <h1>Eliminar</h1>
+    {% if eliminado %}
+        <h1>Usuario eliminado</h1>
+    {% else %}
+        <h1>Error</h1>
+    {% endif %}
+{% endblock mensaje %}
+<!-- ////////////////////////////////////////////////// -->
