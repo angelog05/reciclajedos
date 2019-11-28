@@ -2,4 +2,12 @@
 
 Proyecto realizado en django framework
 
-Angelo
+Funcionalidades Usuario:
+- Agregar Usuarios
+- Login, Logout
+
+Funcionalidades Servicio:
+- Agregar
+- Modificar
+- Eliminar
+- Listar
