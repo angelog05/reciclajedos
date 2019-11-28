@@ -1,4 +1,4 @@
-# reciclajedos
+# APP reciclaje
 
 Proyecto realizado en django framework
 
