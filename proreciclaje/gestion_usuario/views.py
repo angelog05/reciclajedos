@@ -2,86 +2,121 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .forms import RegistrarForm, PerfilUsuarioForm
+from .forms import RegistrarForm, PerfilUsuarioForm, RegistraServicio
+from .models import User, Servicio
 
-## Cierre de sesion
+# Cierre de sesion
 def usuario_logout(request):
     logout(request)
-    ##return HttpResponseRedirect(reverse('gestion_usuario:principal'))
-    return render(request, 'principal.html',{})
+    # return HttpResponseRedirect(reverse('gestion_usuario:principal'))
+    return render(request, 'principal.html', {})
 
-## renderizacion a pagina inicial
+# renderizacion a pagina inicial
 def index(request):
-    return render(request, 'gestion_usuario/index.html',{})
-
-## renderizacion a pagina inicial
-def principal(request):
-    return render(request, 'principal.html',{})
-
-## Inicio de sesión    
-def usuario_login(request):
-    ##  Valida si existe un usuario autenticado
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse,('gestion_usuario:index'))
+        # Si utilizo esta opcion genera error::
+        # TypeError at /
+        # quote_from_bytes() expected bytes
+        # return HttpResponseRedirect(reverse,('gestion_usuario:index'))
+        # Con este return no tiene problemas
+        return render(request, 'gestion_usuario/index.html', {})
+    else:
+        return render(request, 'principal.html', {})
+
+# renderizacion a pagina inicial
+def principal(request):
+    return render(request, 'principal.html', {})
+
+# Inicio de sesión
+def usuario_login(request):
+    # Valida si existe un usuario autenticado
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse, ('gestion_usuario:index'))
     else:
         # Recibe formulario mediante metodo POST
         if request.method == 'POST':
-            ## Recibimos la informacion del formulario
+            # Recibimos la informacion del formulario
             username = request.POST.get('username')
             password = request.POST.get('password')
-            ## Autenticamos el usuario
+            # Autenticamos el usuario
             user = authenticate(username=username, password=password)
-            ## Verifica que exista el usuario
+            # Verifica que exista el usuario
             if user:
-                ##Verifica si el usuario esta activo
+                # Verifica si el usuario esta activo
                 if user.is_active:
-                    ## Genera un login para autenticar al usuario
+                    # Genera un login para autenticar al usuario
                     login(request, user)
                     return HttpResponseRedirect(reverse('gestion_usuario:index'))
                 else:
                     return HttpResponse("Tu cuenta esta inactiva.")
             else:
-                ## Si no existe usuario
+                # Si no existe usuario
                 print("username: {} - password: {}".format(username, password))
                 return HttpResponse("Datos inválidos")
-        else: ##Si llega desde una url en metodo GET (desde el navegador)
+        else:  # Si llega desde una url en metodo GET (desde el navegador)
             return render(request, 'gestion_usuario/login.html', {})
 
-## Registrar usuario nuevo
+# Registrar usuario nuevo
 def registrar(request):
     registrado = False
     # Recibe formulario mediante metodo POST
     if request.method == 'POST':
-        ## Crea formulario de usuario con informacion del request
+        # Crea formulario de usuario con informacion del request
         user_form = RegistrarForm(data=request.POST)
-        ## Crea formulario de perfil con informacion del request
+        # Crea formulario de perfil con informacion del request
         profile_form = PerfilUsuarioForm(data=request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            ## Guardamos en base de datos
+            # Guardamos en base de datos
             user = user_form.save()
-            ## Encripta password con el modelo de django
+            # Encripta password con el modelo de django
             user.set_password(user.password)
-            ## Guarda usuario tras encriptacion
+            # Guarda usuario tras encriptacion
             user.save()
-            ## Instancia un objeto perfil
+            # Instancia un objeto perfil
             profile = profile_form.save(commit=False)
-            ## Asigna un usario al perfil
+            # Asigna un usario al perfil
             profile.user = user
-            ## Valida si en el Array FILES existe el archivo del input foto_perfil
+            # Valida si en el Array FILES existe el archivo del input foto_perfil
             if 'foto_perfil' in request.FILES:
-                ## Agrega la imagen al perfil
+                # Agrega la imagen al perfil
                 profile.foto_perfil = request.FILES['foto_perfil']
-            ## Guarda en base de datos
+            # Guarda en base de datos
             profile.save()
             registrado = True
-        else: ## Si alguno de los formularios es invalido
+        else:  # Si alguno de los formularios es invalido
             print(user_form.errors, profile_form.errors)
             return HttpResponse("Datos inválidos")
-    else: ## Si no es POST generamos los formularios
+    else:  # Si no es POST generamos los formularios
         user_form = RegistrarForm()
         profile_form = PerfilUsuarioForm()
 
-    return render(request, 'gestion_usuario/registrar.html', 
-                    {'user_form': user_form,
-                     'profile_form': profile_form,
-                     'registrado': registrado})
+    return render(request, 'gestion_usuario/registrar.html',
+                  {'user_form': user_form,
+                   'profile_form': profile_form,
+                   'registrado': registrado})
+
+# @staff_member_required
+def eliminar_usuario(request, id_user):
+    u = User.objects.get(id=id_user)
+    u.delete()
+    return render(request,'principal.html',{})
+
+def listar_servicios(request):
+    # creamos una colección la cual carga TODOS los registos
+    servicios = Servicio.objects.all()
+    # renderizamos la colección en el template
+    return render(request,
+        "gestion_usuario/listar_servicios.html", {'servicios': servicios})
+
+def agregar_servicio(request):
+    data = {
+        'form': RegistraServicio()
+    }
+
+    if request.method == "POST":
+        formulario = RegistraServicio(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data['mensaje']="Guardado Correctamente"
+   
+    return render(request, 'gestion_usuario/agregar_servicio.html', data)

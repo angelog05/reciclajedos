@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import PerfilUsuario
+from .models import PerfilUsuario, Servicio
 
 
 class   PerfilUsuarioForm(forms.ModelForm):
@@ -12,13 +12,31 @@ class   PerfilUsuarioForm(forms.ModelForm):
             'foto_perfil': 'Foto de perfil'
         }
 
+class RegistraServicio(forms.ModelForm):
+    class Meta():
+        model = Servicio
+        fields = ('nombre_servicio',
+                'valor_servicio',
+                'descripcion_servicio',
+                'fecha_servicio'
+                )
+        labels = {
+            'nombre_servicio': 'Nombre servicio',
+            'valor_servicio': 'Valor servicio',
+            'descripcion_servicio': 'Descripción servicio',
+            'fecha_servicio': 'Fecha servicio',
+            'cliente': 'Cliente'
+        }
+        exclude = ('cliente',)
 
 class RegistrarForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(), label='Contraseña')
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 
+                'email', 
+                'password')
         labels = {
             'username': 'Nombre de usuario',
             'email': 'Correo',
