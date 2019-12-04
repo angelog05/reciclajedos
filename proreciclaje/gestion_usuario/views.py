@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from .forms import RegistrarForm, PerfilUsuarioForm, RegistraServicio
 from .models import User, Servicio
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from .serializers import ServicioSerializer
+from rest_framework import generics
 
 # -----------  SESION ---------------------
 # Cierre de sesion
@@ -60,6 +62,14 @@ def index(request):
 # renderizacion a pagina principal
 def principal(request):
     return render(request, 'principal.html', {})
+
+# renderizacion a contacto
+def contacto(request):
+    return render(request, 'contacto.html', {})
+
+# renderizacion a servicios principales
+def servicios_principales(request):
+    return render(request, 'servicios.html', {})
 # ----------- RENDERIZACION --------------------
 
 
@@ -113,11 +123,14 @@ def registrar(request):
 
 # -----------  SERVICIO --------------------
 def listar_servicios(request):
-    # creamos una colección la cual carga TODOS los registos
-    servicios = Servicio.objects.all()
-    # renderizamos la colección en el template
-    return render(request,
-        "gestion_usuario/servicio/listar_servicios.html", {'servicios': servicios})
+    if request.user.is_authenticated:
+        # creamos una colección la cual carga TODOS los registos
+        servicios = Servicio.objects.all()
+        # renderizamos la colección en el template
+        return render(request,
+            "gestion_usuario/servicio/listar_servicios.html", {'servicios': servicios})
+    else:
+        return render(request, 'principal.html', {})
 
 def agregar_servicio(request):
     """Agrega nuevo servicio a la BD
@@ -131,52 +144,67 @@ def agregar_servicio(request):
     
     """
     try:
-        if request.method == "POST":
-            serv_form = RegistraServicio(data=request.POST)
-            if serv_form.is_valid():
-                serv_form.save()
-                return redirect('servicio/listar_servicios/')
+        if request.user.is_authenticated:
+            if request.method == "POST":
+                serv_form = RegistraServicio(data=request.POST)
+                if serv_form.is_valid():
+                    serv_form.save()
+                    return redirect('servicio/listar_servicios/')
+                else:
+                    return HttpResponse("Los datos del formulario no son validos")
             else:
-                return HttpResponse("Los datos del formulario no son validos")
+                form = RegistraServicio()
+                return render(request, 'gestion_usuario/servicio/agregar_servicio.html',
+                            {'form': form})
         else:
-            form = RegistraServicio()
-            return render(request, 'gestion_usuario/servicio/agregar_servicio.html',
-                        {'form': form})
+            return render(request, 'principal.html', {})
     except:
         return HttpResponse("Error al guardar")
     
-    return render(request, 'gestion_usuario/registrar.html',{})
+    #return render(request, 'gestion_usuario/registrar.html',{})
 
 def editar_servicio(request, servicio_id):
-    # Recuperamos el registro de la base de datos por el id
-    instancia= Servicio.objects.get(id=servicio_id)
-    # creamos un formulario con los datos del objeto
-    form=  RegistraServicio(instance=instancia)
-    # Compronbamos si se envió el formulario
-    if request.method=="POST":
-        # Actualizamos el formulario con los datos del objeto
-        form= RegistraServicio(request.POST, instance=instancia)
-        # Si el formulario es valido....
-        if form.is_valid():
-            #Guardamos el formulario pero sin confirmar aun
-            instancia= form.save(commit=False)
-            # grabamos!!!
-            instancia.save()
-            return redirect('servicio/listar_servicios/')
+    # Verificar si el usuario esta logueado
+    if request.user.is_authenticated:
+        # Recuperamos el registro de la base de datos por el id
+        instancia= Servicio.objects.get(id=servicio_id)
+        # creamos un formulario con los datos del objeto
+        form=  RegistraServicio(instance=instancia)
+        # Compronbamos si se envió el formulario
+        if request.method=="POST":
+            # Actualizamos el formulario con los datos del objeto
+            form= RegistraServicio(request.POST, instance=instancia)
+            # Si el formulario es valido....
+            if form.is_valid():
+                #Guardamos el formulario pero sin confirmar aun
+                instancia= form.save(commit=False)
+                # grabamos!!!
+                instancia.save()
+                return redirect('servicio/listar_servicios/')
 
-    return render(request, "gestion_usuario/servicio/editar_servicio.html",{'form':form})
+        return render(request, "gestion_usuario/servicio/editar_servicio.html",{'form':form})
+    else:
+            return render(request, 'principal.html', {})
 
 def eliminar_servicio(request, servicio_id):
     try:    
-        # Recuperamos el registro de la base de datos por el id
-        instancia= Servicio.objects.get(id=servicio_id)
-        # Eliminamos el 
-        instancia.delete()
+        # Verificar si el usuario esta logueado
+        if request.user.is_authenticated:
+            # Recuperamos el registro de la base de datos por el id
+            instancia= Servicio.objects.get(id=servicio_id)
+            # Eliminamos el 
+            instancia.delete()
 
-        return redirect('/listar_servicios/')
+            return redirect('/listar_servicios/')
+        else:
+            return render(request, 'principal.html', {})
 
     except:
         return redirect('/')   
 
-    
+# No funciona
+class ServicioList(generics.ListCreateAPIView):
+    queryset = Servicio.objects.all()
+    serializer_class = ServicioSerializer
+
 # -----------  FIN SERVICIO --------------------

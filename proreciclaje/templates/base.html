@@ -62,7 +62,10 @@
                   <a class="nav-link" href="{% url 'gestion_usuario:principal' %}">Inicio</a>
                 </li>
                 <li class="nav-item mx-2">
-                  <a class="nav-link" href="#">Servicios</a>
+                  <a class="nav-link" href="{% url 'gestion_usuario:servicios' %}">Servicios</a>
+                </li>
+                <li class="nav-item mx-2">
+                  <a class="nav-link" href="{% url 'gestion_usuario:contacto' %}">Contacto</a>
                 </li>
                 <li class="nav-item mx-1">
                   <a class="nav-link" href="{% url 'gestion_usuario:login' %}">Iniciar_sesión</a>
@@ -125,6 +128,8 @@
     </footer>
 
     <!-- JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/validadores.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

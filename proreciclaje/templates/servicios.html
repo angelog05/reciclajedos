@@ -1,12 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Servicios</title>
-</head>
-<body>
-    <h1>Servicios</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    
+
+        <!--==========================
+      Sección servicios
+    ============================-->
+
+        <section id="about">
+            <div class="container">
+
+                <header class="section-header">
+                    <h2 class="text-center">Servicios</h2>
+                    <p class="text-center">Servicios ReciclandoFuturo </p>
+                    <br>
+                    <br>
+                </header>
+
+                <div class="row about-cols">
+
+                    <div class="col-md-4 wow fadeInUp">
+                        <div class="about-col">
+                            <div class="img">
+                                <img src="img/noticia-3-1.jpg" alt="" class="img-fluid">
+                            </div>
+                            <h2 class="title"><a href="#">Retiro de Reciclaje a Domicilio</a></h2>
+                            <p>
+                                Retiro programado de residuos reciclables a domicilio para casa particular, condominios
+                                de casas/departamentos, comunidades de vecinos, empresas y oficinas; locales
+                                comerciales; establecimientos educacionales.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="about-col">
+                            <div class="img">
+                                <img src="img/new_50574.jpg" alt="" class="img-fluid">
+                            </div>
+                            <h2 class="title"><a href="#">Programa de Educación Ambiental y Reciclaje</a></h2>
+                            <p>
+                                Vamos a centros educacionales a dar charlas sobre cómo reciclar o reutilizar desechos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="about-col">
+                            <div class="img">
+                                <img src="img/Importancia-Educacion-Ambiental.jpg" alt="" class="img-fluid">
+                            </div>
+                            <h2 class="title"><a href="#">Manuales instructivos de reciclaje </a></h2>
+                            <p>
+                                Al contratar nuestro servicio te entregamos un manual para que tengas claro qué tipo de
+                                residuos se pueden reciclar y cómo deben ser entregados a nuestros camiones recolectores
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- #about -->
+
+        
+    <!--==========================
+      Sección Tarifas
+    ============================-->
+    <section id="services">
+        <div class="container">
+  
+          <header class="section-header wow fadeInUp">
+            <h3 class="text-center">Tarifas</h3>
+            <br>
+            
+          </header>
+  
+          <div class="row">
+  
+            <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
+              <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
+              <h4 class="title"><a href="">Servicio a Casas Particulares</a></h4>
+              <p class="description">Retiro programado de residuos reciclables a domicilio para casa particular, condominios de casas/departamentos.</p>
+              <br>
+              <h4 class="title"><a href="">$5.990</a></h4>
+            </div>
+            <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
+              <div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>
+              <h4 class="title"><a href="">Servicio a Empresas</a></h4>
+              <p class="description">Retiro programado de residuos reciclables a empresas.</p>
+              <br>
+              <h4 class="title"><a href="">$10.990</a></h4>
+            </div>
+            <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
+              <div class="icon"><i class="ion-ios-paper-outline"></i></div>
+              <h4 class="title"><a href="">Charlas en Centros Educacionales</a></h4>
+              <p class="description">Para saber las tarifas de este servicio, contáctanos para realizar cotización</p>
+            </div>
+         
+          </div>
+  
+        </div>
+      </section><!-- #services -->
+    
+  
+                  <!-- #tarifas -->
+
+{% endblock content %}

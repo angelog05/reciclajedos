@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
+from .models import Servicio
 
 class UserSerializers(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -25,3 +26,13 @@ class UserSerializers(serializers.Serializer):
             raise serializers.ValidationError("Este nombre ya se encuentra registrado, ingrese uno nuevo")
         else:
             return data
+
+class ServicioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Servicio
+        fields = {
+            'id',
+            'nombreservicio',
+            'valorservicio',
+            'descripcionservicio',
+        }
