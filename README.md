@@ -15,3 +15,6 @@ Funcionalidades Servicio:
         - Modificar
         - Eliminar
         - Listar
+
+Errores detectados:
+    - Duplica secciones del carousel y no muestra imagenes
